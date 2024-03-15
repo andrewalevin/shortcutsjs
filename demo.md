@@ -21,10 +21,29 @@ col-3
 Text After shortcut
 
 
+### Impact in HTML
+
+```html
+<p>Text Before shortcut</p>
+
+<p>[shortcut-rows-to-columns]</p>
+
+<p>col-1</p>
+
+<p>col-2</p>
+
+<p>col-3</p>
+
+<p>[/shortcut-rows-to-columns]</p>
+
+<p>Text After shortcut</p>
+```
+
+
 ### Effect
 
 
-```
+```html
 <p>Text Before shortcut</p>
 
 <div class="row">
