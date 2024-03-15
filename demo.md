@@ -24,3 +24,25 @@ Text After shortcut
 ### Effect
 
 
+```
+<p>Text Before shortcut</p>
+
+<div class="row">
+	<div class="col">
+		col-1
+	</div>
+	<div class="col">
+		col-2
+	</div>
+	<div class="col">
+		col-3
+	</div>
+</div>
+
+<p>Text After shortcut</p>
+```
+
+
+
+
+
