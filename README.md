@@ -1,0 +1,2 @@
+# shortcutsjs
+🦀 Shortcuts JS
