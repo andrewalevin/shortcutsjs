@@ -46,6 +46,7 @@ Text After shortcut
 ```html
 <p>Text Before shortcut</p>
 
+<p>
 <div class="row">
 	<div class="col">
 		col-1
@@ -57,6 +58,7 @@ Text After shortcut
 		col-3
 	</div>
 </div>
+</p>
 
 <p>Text After shortcut</p>
 ```
