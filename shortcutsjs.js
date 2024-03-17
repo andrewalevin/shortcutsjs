@@ -40,10 +40,10 @@ function ytbParseRow(text){
     const imgSize = 'sddefault';
     const imgSrc = `https://img.youtube.com/vi/${movieid}/${imgSize}.jpg`
     
-    let html = `<img src=${imgSrc}>${imgSrc}`;
+    let html = `<p><a href="${url}"><img src=${imgSrc}></a></p>`;
     if (title)
-        html = `${html}<h3>💎${title}</h3>`;
-    html = `<div class="col">\n${html}\n</div>`;
+        html = `${html}<h3><a href="${url}">${title}</h3></a>`;
+    html = `<div class="col-12 col-md-6 col-lg-4">\n${html}\n</div>`;
     return html
 }
 
@@ -54,7 +54,12 @@ function replaceShortcut(html){
     console.log('🚀 start Match');
 
     const regex = /<p>\[shortcut\]([\s\S]*?)\[\/shortcut\]<\/p>/g;
-    for (result of html.matchAll(regex)) {
+    // const regex = /\[shortcut\]([\s\S]*?)\[\/shortcut\]/g;
+    const results = html.matchAll(regex);
+    console.log('🚀 results: ', results);
+
+
+    for (const result of results) {
         console.log('🚀 result: ', result);
         
         let innerResult = result[1]
@@ -65,7 +70,7 @@ function replaceShortcut(html){
         for (const item of innerResult.split('\n'))
             innerHtml = innerHtml.concat(ytbParseRow(item), '\n')
             
-        innerHtml = `<div class="row">\n${innerHtml}\n</div>`;
+        innerHtml = `<div class="row g-4">\n${innerHtml}\n</div>`;
         html = html.replace(result[0], innerHtml);
     }
 
