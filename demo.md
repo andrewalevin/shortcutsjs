@@ -3,7 +3,7 @@
 	@import url("/utils/css/iframe-youtube.css");
 </style>
 
-<script src="shortcutsjs.js"></script>
+
 
 # What to do
 
@@ -78,5 +78,5 @@ Final
 
 
 
-
+<script src="shortcutsjs.js"></script>
 
