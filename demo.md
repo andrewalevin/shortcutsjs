@@ -1,3 +1,10 @@
+<style>
+	@import url("/utils/css/bootstrap-grid.css");
+	@import url("/utils/css/iframe-youtube.css");
+</style>
+
+<script src="shortcutsjs.js"></script>
+
 # What to do
 
 Some descriptiption text
@@ -5,21 +12,27 @@ Some descriptiption text
 
 ### Impact
 
+Starting
 
-Text Before shortcut
+[shortcut]
 
-[shortcut-rows-to-columns]
+https://www.youtube.com/watch?v=od5M5g42SSs Waltzes
 
-col-1
+https://www.youtube.com/watch?v=nGdFHJXciAQ Vivaldi - Four Seasons (Winter)
 
-col-2
+[/shortcut]
 
-col-3
+Additions
 
-[/shortcut-rows-to-columns]
+[shortcut]
 
-Text After shortcut
+https://www.youtube.com/watch?v=Uk1-NT91llM Беспилотный мир
 
+https://www.youtube.com/watch?v=DknPnrAhzgk Тбилиси. Исани. Если ночью захотелось мороженое с шоколадом и карамелью.
+
+[/shortcut]
+
+Final
 
 ### Impact in HTML
 
