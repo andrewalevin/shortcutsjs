@@ -87,18 +87,26 @@ const body_html = document.getElementsByClassName("markdown-body")[0];
 body_html.innerHTML = replaceShortcut(body_html.innerHTML);
 
 
+function imgShifter(){
+    console.log('🐲 Img Shifter: ');
 
-console.log('🐲 Img Splitter ');
-
-for (const img of document.getElementsByTagName("img")){
-    if (img.naturalWidth > 120)
-        continue;   
-
-    console.log('🌄: ', img.src);
-    console.log(img.width);
-    console.log(img.clientWidth);
-    console.log(img.naturalWidth);
-    console.log();
-
-    img.src = img.src.replace('maxresdefault', 'fhqdefault');
+    for (const img of document.getElementsByTagName("img")){
+        if (img.naturalWidth > 120)
+            continue;   
+    
+        console.log('🌄: ', img.src);
+        console.log(img.width);
+        console.log(img.clientWidth);
+        console.log(img.naturalWidth);
+        console.log();
+    
+        img.src = img.src.replace('maxresdefault', 'fhqdefault');
+    }
 }
+
+Promise.all(Array.from(document.images).filter(img => !img.complete).map(img => new Promise(resolve => { img.onload = img.onerror = resolve; }))).then(() => {
+    console.log('🐲🐲🐲 images finished loading');
+    imgShifter();
+});
+
+
