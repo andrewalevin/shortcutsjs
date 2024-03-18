@@ -37,12 +37,16 @@ function ytbParseRow(text){
 
     const movieid = getYouTubeVideoID(url);
 
-    const imgSize = 'sddefault';
+    let imgSize = 'hqdefault';
+    imgSize = 'hqdefault';
+    imgSize = 'maxresdefault';
     const imgSrc = `https://img.youtube.com/vi/${movieid}/${imgSize}.jpg`
     
-    let html = `<p><a href="${url}"><img src=${imgSrc}></a></p>`;
+    let html = `<p><a href="${url}"><img src=${imgSrc}></a><br><a href="${imgSrc}">${imgSrc}</a></p>`;
+    
     if (title)
-        html = `${html}<h3><a href="${url}">${title}</h3></a>`;
+        html = `<h3><a href="${url}">${title}</a></h3>${html}`;
+    
     html = `<div class="col-12 col-md-6 col-lg-4">\n${html}\n</div>`;
     return html
 }
