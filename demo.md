@@ -2,7 +2,7 @@
 	@import url("/utils/css/bootstrap-grid.css");
 	@import url("/utils/css/iframe-youtube.css");
 </style>
-
+<script src="shortcutsjs.js" defer></script>
 
 
 # What to do
@@ -80,5 +80,4 @@ Final
 
 
 
-<script src="shortcutsjs.js"></script>
 
