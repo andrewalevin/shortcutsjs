@@ -40,10 +40,10 @@ function ytbParseRow(text){
     let imgSize = 'maxresdefault';
     const imgSrc = `https://img.youtube.com/vi/${movieid}/${imgSize}.jpg`
     
-    let html = `<p><a href="${url}"><img src=${imgSrc}></a></p>`;
+    let html = `<p style="margin-bottom: 0.25rem;"><a href="${url}"><img src=${imgSrc}></a></p>`;
     
     if (title)
-        html = `${html}<h3><a href="${url}">${title}</a></h3>`;
+        html = `${html}<h3 style="margin-top: 0.25rem;"><a href="${url}">${title}</a></h3>`;
     
     html = `<div class="col-12 col-md-6 col-lg-4">\n${html}\n</div>`;
     return html
