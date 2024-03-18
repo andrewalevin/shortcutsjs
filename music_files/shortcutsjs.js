@@ -88,4 +88,20 @@ body_html.innerHTML = replaceShortcut(body_html.innerHTML);
 
 
 
+console.log('🐲 Img Splitter ');
+
+for (const img of document.getElementsByTagName("img")){
+    if (img.naturalWidth > 120)
+        continue;   
+
+    console.log('🌄: ', img.src);
+    console.log(img.width);
+    console.log(img.clientWidth);
+    console.log(img.naturalWidth);
+    console.log();
+
+    img.src = img.src.replace('maxresdefault', 'fhqdefault');
+}
+
+
 
