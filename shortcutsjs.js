@@ -72,7 +72,7 @@ function replaceShortcut(html){
         for (const item of innerResult.split('\n'))
             innerHtml = innerHtml.concat(ytbParseRow(item), '\n')
             
-        innerHtml = `<div class="row g-4">\n${innerHtml}\n</div>`;
+        innerHtml = `<div class="row mb-5">\n${innerHtml}\n</div>`;
         html = html.replace(result[0], innerHtml);
     }
 
