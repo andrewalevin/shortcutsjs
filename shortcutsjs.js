@@ -43,7 +43,7 @@ function ytbParseRow(text){
     let html = `<p><a href="${url}"><img src=${imgSrc}></a><br><a href="${imgSrc}">${imgSrc}</a></p>`;
     
     if (title)
-        html = `<h3><a href="${url}">${title}</a></h3>${html}`;
+        html = `${html}<h3><a href="${url}">${title}</a></h3>`;
     
     html = `<div class="col-12 col-md-6 col-lg-4">\n${html}\n</div>`;
     return html
