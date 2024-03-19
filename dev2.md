@@ -20,15 +20,14 @@
 
 [shortcut]
 
-https://www.youtube.com/watch?v=ru1LC9lW20Q
+https://www.youtube.com/watch?v=ru1LC9lW20Q  
 
-Ryan Gosling - I'm Just Ken Exclusive (From Barbie The Album) [Official]
+Ryan Gosling - I'm Just Ken Exclusive (From Barbie The Album) [Official]  
 
 https://music.yandex.com/album/27254923/track/117099894
 
 
-https://www.youtube.com/watch?v=FTQbiNvZqaY
-
+https://www.youtube.com/watch?v=FTQbiNvZqaY  
 Toto - Africa (Official HD Video)
 
 
