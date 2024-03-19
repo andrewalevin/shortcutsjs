@@ -16,30 +16,34 @@
 [https://music.yandex.com/album/27254923/track/117099894](https://music.yandex.com/album/27254923/track/117099894)
 
 
-## March 08
-
-[shortcut]
-
-https://www.youtube.com/watch?v=aGSKrC7dGcY
-Depeche Mode - Enjoy The Silence (Official Video)
-https://music.yandex.com/album/27254923/track/117099894
-
-[/shortcut]
-
-
 ## March 07
 
 [shortcut]
 
 https://www.youtube.com/watch?v=ru1LC9lW20Q
+
 Ryan Gosling - I'm Just Ken Exclusive (From Barbie The Album) [Official]
+
 https://music.yandex.com/album/27254923/track/117099894
 
+
 https://www.youtube.com/watch?v=FTQbiNvZqaY
+
 Toto - Africa (Official HD Video)
 
+
 https://www.youtube.com/watch?v=XlTCDGBedgU
+
 АХ – Инженер (Official Music Video)
+
+
+
+https://www.youtube.com/watch?v=aGSKrC7dGcY
+
+Depeche Mode - Enjoy The Silence (Official Video)
+
+https://music.yandex.com/album/27254923/track/117099894
+
 
 [/shortcut]
 	
