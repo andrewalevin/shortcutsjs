@@ -12,7 +12,7 @@ function getYouTubeVideoID(url) {
 
 const getRange = (min, max) => Array.from({ length: max - min + 1 }, (_, i) => min + i);
 
-const urlPattern = /(https?:\/\/[^\s]+)/g;
+
 
 
 function constructRow(text){
@@ -39,9 +39,11 @@ function constructParagraph(text){
     return `<p style="margin-bottom: 0.25rem;">${text}</p>`;
 }
 
+const urlPattern = /https?:\/\/[^\s<]+/g;
+
 function urlReplacer(html){
     for(const url of html.match(urlPattern))
-        html = html.replace(url, constructParagraph(constructUrl(url, url)));
+        html = html.replace(url, constructUrl(url, url));
     return html
 }
 
@@ -64,8 +66,16 @@ function oneRowReplacer(html){
     const imgSize = 'maxresdefault';
     const imgSrc = `https://img.youtube.com/vi/${movieid}/${imgSize}.jpg`
 
-    if (rows.length > 2)
-        text  = urlReplacer(rows.slice(2).join('<br>')).concat(text);
+    if (rows.length > 2){
+        console.log('💚 Epsent ',);
+        let descriptions = [];
+        for(const row of rows.slice(2)){
+            descriptions.push(row.trim())
+        }
+        console.log('💚 Epsent descriptions: ', descriptions);
+        text  = constructParagraph(urlReplacer(descriptions.join('<br>'))).concat(text);
+    }
+        
     
     if (rows.length > 1)
         text  = constructTitle(constructUrl(url, rows[1].trim())).concat(text);
@@ -76,17 +86,17 @@ function oneRowReplacer(html){
 }
 
 
-const tagName = 'shortcut';
-
 function processingShortcuts(){
     console.log('🐝 ProcessingShortcuts:');
 
     let parent = document.getElementsByClassName("markdown-body")[0];
-
     let shortcutBlocks = [];
     let starting = -1;
     for(const idx in parent.children){
         const child =  parent.children[idx];
+        if (!child.innerHTML)
+            continue
+
         if (child.innerHTML.includes('[shortcut]'))
             starting = idx;
 
@@ -94,6 +104,7 @@ function processingShortcuts(){
             shortcutBlocks.push([Number(starting), Number(idx)]);
 
     }
+    console.log('shortcutBlocks: ', shortcutBlocks);
 
     for(const block of shortcutBlocks){
         let items = [];
