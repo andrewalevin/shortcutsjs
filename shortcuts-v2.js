@@ -67,12 +67,10 @@ function oneRowReplacer(html){
     const imgSrc = `https://img.youtube.com/vi/${movieid}/${imgSize}.jpg`
 
     if (rows.length > 2){
-        console.log('💚 Epsent ',);
         let descriptions = [];
-        for(const row of rows.slice(2)){
+        for(const row of rows.slice(2))
             descriptions.push(row.trim())
-        }
-        console.log('💚 Epsent descriptions: ', descriptions);
+
         text  = constructParagraph(urlReplacer(descriptions.join('<br>'))).concat(text);
     }
         
