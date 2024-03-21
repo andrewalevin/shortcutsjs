@@ -102,7 +102,6 @@ function processingShortcuts(){
             shortcutBlocks.push([Number(starting), Number(idx)]);
 
     }
-    console.log('shortcutBlocks: ', shortcutBlocks);
 
     for(const block of shortcutBlocks){
         let items = [];
