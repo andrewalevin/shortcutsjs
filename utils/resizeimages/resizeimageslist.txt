@@ -1,0 +1,2 @@
+moscow3/imgs 100
+moscow3/imgs2 250
