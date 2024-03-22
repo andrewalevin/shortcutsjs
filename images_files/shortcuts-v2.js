@@ -32,7 +32,7 @@ function constructUrl(url, text){
 }
 
 function constructImg(src){
-    return `<img src="${src}" loading="lazy" />`;
+    return `<img src=${src}>`;
 }
 
 function constructParagraph(text){
