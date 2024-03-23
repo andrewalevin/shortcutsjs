@@ -1,6 +1,6 @@
 
 
-console.log('🏀 🏏 shortcuts-v3.js');
+console.log('🎸🎸 shortcuts-v4.js');
 
 
 function getYouTubeVideoID(url) {
@@ -99,7 +99,6 @@ function oneRowReplacer(html){
     return text
 }
 
-
 function processingShortcuts(){
     console.log('🎠 V3 - ProcessingShortcuts: -- V3');
 
@@ -155,3 +154,76 @@ function blinkImagesReplacer(){
 }
 
 blinkImagesReplacer();
+
+
+
+
+const shortcutsAll = [
+    'sh-row2',
+    'sh-row3',
+    'sh-row4',
+    'sh-ytb',
+];
+const regexShortcuts = new RegExp(`(\\[/?)(${shortcutsAll.join('|')})\]`, "g");
+
+function parsingShortcuts(htmlElement){
+    let shortcutBlocks = [];
+    let starting = -1;
+    for(const idx in htmlElement.children){
+        const child =  htmlElement.children[idx];
+        if (!child.innerHTML)
+            continue
+
+        let matches = child.innerHTML.matchAll(regexShortcuts);
+        matches = Array.from(matches);
+        if (!matches.length)
+            continue
+        matches = matches[0];
+
+        if (matches[1] == '[')
+            starting = idx;
+            
+        if (matches[1] == '[\/' )
+            shortcutBlocks.push([Number(starting), Number(idx), matches[2]]);  
+    }
+    return shortcutBlocks
+}
+
+function shortcutFunc(itmes){
+    console.log('🍱 shortcutFunc: ');
+    console.log('🍱 items: ', itmes);
+
+    const elem = document.createElement("h2");
+    elem.innerHTML = 'Header';
+    return elem
+
+}
+
+function processingShortcuts2(){
+    console.log('🔮 V4 - processingShortcuts2: ');
+
+    let parent = document.getElementsByClassName("markdown-body")[0];
+
+    let shortcutBlocks = parsingShortcuts(parent);
+    console.log('📚 shortcutBlocks: ', shortcutBlocks);
+
+    for(const block of shortcutBlocks.reverse()){
+        console.log('🥎 Block: ', block);
+        let innerChilds = [];
+        const range = getRange(block[0], block[1]);
+        for(const idx of range.reverse()){
+            console.log('🥎 idx: ', idx);
+            if (idx!=block[0] && idx!=block[1])
+                innerChilds.push(parent.children[idx]);
+            if (idx==block[0])
+                continue
+            parent.children[idx].remove();
+        }
+        const constructedElem = shortcutFunc(innerChilds);
+        parent.children[block[0]].replaceWith(constructedElem);
+    }
+
+    console.log('🔮 Fina '); 
+}
+
+processingShortcuts2();
