@@ -187,8 +187,7 @@ function shortcutYtb(childs){
     const title = rows[1].trim()
     const titleElem = document.createElement("h4");    
     titleElem.className = "mt-2 mb-2";
-    titleElem.style = 'color: initial;';
-    titleElem.innerHTML = `<a href="${url}">${title}</a>`;
+    titleElem.innerHTML = `<a href="${url}" style="color: initial;">${title}</a>`;
     elem.append(titleElem);
 
 
