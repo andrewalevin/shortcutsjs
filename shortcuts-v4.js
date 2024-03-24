@@ -1,17 +1,49 @@
 
-console.log('🎸🎸 shortcuts-v4.js');
+console.log('🎸🎸 shortcuts-v4.js V-4-3');
 
+
+// Utils
 
 function getYouTubeVideoID(url) {
     var youtubeRegex = /^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
     var match = url.match(youtubeRegex);
-    if (match && match[1]) {
-        return match[1];
-    } else {
-        return null;
-    }
+    if (match && match[1])
+        return match[1]
+    return null
 }
 
+function checkUrl(url){
+    const pattern = /https?:\/\/[^\s<]+/;
+    if (pattern.test(url))
+        return true
+    return false
+}
+
+function checkYoutubeUrl(url){
+    const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com\/(watch\?(.*&)?v=|embed\/)|youtu\.be\/)/;
+    if (youtubeRegex.test(url))
+        return true
+    return false
+}
+
+const getRange = (min, max) => Array.from({ length: max - min + 1 }, (_, i) => min + i);
+
+// Main Part
+
+function constructTagA(url, text=''){
+    const elem = document.createElement("a");
+    elem.href = url;
+    elem.innerHTML = text;
+    return elem
+}
+
+
+function constructTagImg(url){
+    const elem = document.createElement("img");
+    elem.src = url;
+    elem.loading = "lazy";
+    return elem
+}
 
 
 const menuShortcuts = {
@@ -26,8 +58,6 @@ const menuShortcuts = {
 const regexShInner = Object.keys(menuShortcuts).join('|');
 
 const regexShortcuts = new RegExp(`(\\[/?)(${regexShInner})\]`, "g");
-
-const getRange = (min, max) => Array.from({ length: max - min + 1 }, (_, i) => min + i);
 
 function parsingShortcuts(htmlElement){
     let shortcutBlocks = [];
@@ -81,8 +111,7 @@ function processingShortcuts(){
 }
 
 
-
-
+// Shortcut Functions
 
 function shortcutCol(childs, size=1){
     const elem = document.createElement("div");
@@ -131,23 +160,10 @@ function shortcutRow4(childs){
     return elem
 }
 
-function checkUrl(url){
-    const pattern = /https?:\/\/[^\s<]+/;
-    if (pattern.test(url))
-        return true
-    return false
-}
-
-function checkYoutubeUrl(url){
-    const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com\/(watch\?(.*&)?v=|embed\/)|youtu\.be\/)/;
-    if (youtubeRegex.test(url))
-        return true
-    return false
-}
 
 function tuningURL(text){
     for(const url of text.match(/https?:\/\/[^\s<]+/g))
-        text = text.replace(url, `<a href="${url}">${url}</a>`);
+        text = text.replace(url, constructTagA(url, url).outerHTML);        
     return text
 }
 
@@ -172,12 +188,13 @@ function shortcutYtb(childs){
 
     const elemImg = document.createElement("div");
     elemImg.style = "background-image: url(); background-size: cover; width: 100%; aspect-ratio: 1.8 / 1;";
-    elemImg.innerHTML = `
-        <a href="${url}">
-            <span style="color: transparent; display: inline-block;">
-                <img src="${imgSrc}">
-            </span>
-        </a>`;
+
+    const tagA = constructTagA(url);
+    tagImg = constructTagImg(imgSrc);
+    tagImg.className = 'thumbnail-youtube';
+    tagA.append(tagImg);
+
+    elemImg.append(tagA);
     elem.append(elemImg);
 
 
@@ -187,7 +204,11 @@ function shortcutYtb(childs){
     const title = rows[1].trim()
     const titleElem = document.createElement("h4");    
     titleElem.className = "mt-2 mb-2";
-    titleElem.innerHTML = `<a href="${url}" style="color: initial;">${title}</a>`;
+
+    const tagAtitle = constructTagA(url, title);
+    tagAtitle.style = "color: initial; ";
+    titleElem.append(tagAtitle);
+
     elem.append(titleElem);
 
 
@@ -215,17 +236,19 @@ function shortcutRowYtb(childs){
 processingShortcuts();
 
 
+function imgOnload(img){
+    if (img.naturalWidth < 121){
+        let parts = img.src.split('/');
+        parts[parts.length - 1] = 'hqdefault.jpg';
+        img.src = parts.join('/');
+    }
+}
 
 function blinkImagesReplacer(){
-    for(const img of document.getElementsByClassName("markdown-body")[0].querySelectorAll('img')){
-        img.onload = function() {
-            if (img.naturalWidth < 121){
-                let parts = img.src.split('/');
-                parts[parts.length - 1] = 'hqdefault.jpg';
-                img.src = parts.join('/');
-            }
-        };
+    for(const img of document.getElementsByClassName("markdown-body")[0].querySelectorAll('img.thumbnail-youtube')){
+        img.onload = () => imgOnload(img);
     }
 }
 
 blinkImagesReplacer();
+
