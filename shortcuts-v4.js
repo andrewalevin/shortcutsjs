@@ -132,7 +132,8 @@ function shortcutRow4(childs){
 }
 
 function checkUrl(url){
-    if (url.match(/https?:\/\/[^\s<]+/g))
+    const pattern = /https?:\/\/[^\s<]+/;
+    if (pattern.test(url))
         return true
     return false
 }
