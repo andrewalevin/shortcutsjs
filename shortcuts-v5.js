@@ -314,3 +314,24 @@ processingShortcuts();
 
 
 
+
+
+
+ // Img Youtube Small Repalcer
+
+function imgOnload(img){
+    if (img.naturalWidth < 121){
+        let parts = img.src.split('/');
+        parts[parts.length - 1] = 'hqdefault.jpg';
+        img.src = parts.join('/');
+    }
+}
+
+function blinkImagesReplacer(){
+    for(const img of document.getElementsByClassName("markdown-body")[0].querySelectorAll('img.thumbnail-youtube')){
+        img.onload = () => imgOnload(img);
+    }
+}
+
+blinkImagesReplacer();
+
