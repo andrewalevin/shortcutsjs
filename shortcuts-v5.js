@@ -1,5 +1,4 @@
 
-console.log('🎸🎸 shortcuts-v4.js V-4-3');
 
 
 // Utils
@@ -50,11 +49,9 @@ function tuningURL(text){
 }
 
 
-
 function ytbTagConstruction(url, title, items){
     const container = document.createElement("div");
     
-
     const movieID = getYouTubeVideoID(url);
     const imgSize = 'maxresdefault';
     const imgSrc = `https://img.youtube.com/vi/${movieID}/${imgSize}.jpg`
@@ -87,7 +84,6 @@ function ytbTagConstruction(url, title, items){
     // Other Items
 
     for(const item of items){
-        console.log(' -- ', item.innerHTML);
         item.innerHTML = tuningURL(item.innerHTML);
         container.appendChild(item)
     }
@@ -97,15 +93,12 @@ function ytbTagConstruction(url, title, items){
 
 
 
-
 // Main Part
 
 
 // Youtube Block
 
 function ytbCock(items){
-    console.log('🦋 ytbCock');
-
     const container = document.createElement("div");
     title = '';
     url = ''
@@ -196,7 +189,6 @@ function col3Cock(items){
 
 
 
-
 const menuShortcuts = {
     'sh-row': rowCock,
     'sh-col-12': col12Cock,
@@ -215,16 +207,15 @@ function cockDivBlock(items, functionName) {
     return menuShortcuts[functionName](items);
 }
 
-function recursor(rows, index, name='') {
+function recursor0(parent, index, name='') {
+    let rows = parent.children;
     const items = [];
     let targetGotoIndex = null;
     for (let idx = index; idx >= 0; idx--) {
-        if (targetGotoIndex !== null && idx > targetGotoIndex) {
-            //console.log('🏹 Skip idx: ', idx);
+        if (targetGotoIndex !== null && idx > targetGotoIndex)
             continue;
-        }
-        const row = rows[idx].innerHTML;
-        // console.log('🥎 idx: ', idx, row);
+        
+        const row = parent.children[idx].innerHTML;
 
         const match = row.trim().match(pattern);
         if (!match) {
@@ -232,9 +223,8 @@ function recursor(rows, index, name='') {
             elemPar.innerHTML = row;
             items.push(elemPar);
         } else {
-            // console.log('🥭 Match: ', match, match[0], `<${match[1]}>`);
             if (match[0].includes('/')) {
-                const [itemsGot, newTargetIndex] = recursor(rows, idx-1, match[1]);
+                const [itemsGot, newTargetIndex] = recursor(parent, idx-1, match[1]);
 
                 items.push(cockDivBlock(itemsGot, match[1]));
                 targetGotoIndex = newTargetIndex;
@@ -247,35 +237,77 @@ function recursor(rows, index, name='') {
 }
 
 
+function recursor(parent, index, name='') {
+    let rows = parent.children;
+    const items = [];
+    let targetGotoIndex = null;
+    for (let idx = index; idx >= 0; idx--) {
+        
+        const row = parent.children[idx].innerHTML;
+
+        console.log('🥎 idx: ', idx, row);
+
+
+        if (targetGotoIndex !== null && idx > targetGotoIndex){
+            console.log('🏹 Skip idx: ', idx);
+            if (idx !=  targetGotoIndex + 1){
+                console.log('🏏 Remove idx: ', idx);
+                parent.children[idx].innerHTML = '';
+                //parent.children[idx].remove();
+            }
+            continue;
+        }
+            
+        
+        
+
+        const match = row.trim().match(pattern);
+        if (!match) {
+            const elemPar = document.createElement("p");
+            elemPar.innerHTML = row;
+            items.push(elemPar);
+        } else {
+            if (match[0].includes('/')) {
+                const [itemsGot, newTargetIndex] = recursor(parent, idx-1, match[1]);
+                const constructedElem = cockDivBlock(itemsGot, match[1]);
+                
+                console.log('🛼 newTargetIndex: ', newTargetIndex);
+                console.log('🥊 Replace idx: ', idx);
+                parent.children[newTargetIndex+1].replaceWith(constructedElem);
+
+                items.push(constructedElem);
+                targetGotoIndex = newTargetIndex;
+                parent.children[idx].innerHTML = '';
+            } else {
+                return [items.reverse(), idx-1];
+            }
+        }
+    }
+    return [items.reverse(), null];
+}
+
 
 function processingShortcuts(){
-    console.log('🔮 V-5 : ');
+    console.log('🔮 processingShortcuts: V-5 ');
+    console.log('🍱 🌶 Availible Shortcuts in this version: ');
+    Object.keys(menuShortcuts).forEach(item => console.log('🌶', item));
+    console.log('');
+    
 
     let parent = document.getElementsByClassName("markdown-body")[0];
-    const [items, index] = recursor(parent.children, parent.children.length - 1);
+    const [items, index] = recursor(parent, parent.children.length - 1);
 
-    while (parent.firstChild) {
+    /*while (parent.firstChild) {
         parent.removeChild(parent.firstChild);
     }
+    */
 
+    /*
     for(const item of items)
         parent.appendChild(item);
+    */
 
-    return
-    
-    const elemH3 = document.createElement("h3");
-    elemH3.innerHTML = '🐸 See Frog';
-    parent.appendChild(elemH3);
-
-    const elemDiv = document.createElement("div");
-    elemDiv.style = 'padding-left: 4rem; padding-bottom: 15rem;';
-
-    for(const item of items)
-        elemDiv.appendChild(item);
-    
-    parent.appendChild(elemDiv);
-
-    console.log('🔮 Final '); 
+    console.log('🔮 Final');
 }
 
 processingShortcuts();
