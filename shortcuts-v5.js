@@ -99,6 +99,7 @@ function ytbTagConstruction(url, title, items){
 // Youtube Block
 
 function ytbCock(items){
+    console.log('🥦 ytbCock');
     const container = document.createElement("div");
     title = '';
     url = ''
@@ -115,6 +116,9 @@ function ytbCock(items){
         }
         descriptions.push(item);
     }
+    console.log('🍉 title', title);
+    console.log('🍉 url', url);
+    console.log('🍉 descriptions', descriptions);
 
     return ytbTagConstruction(url, title, descriptions)
 }
@@ -122,6 +126,7 @@ function ytbCock(items){
 
 
 function ytbRows3(items){
+    console.log('🐠 ytbRows3');
     const containerRow = rowCock([]);
     for(const item of items){
         if (!item.innerHTML)
@@ -144,8 +149,14 @@ function ytbRows3(items){
 // Row and Cols
 
 function rowCock(items) {
+    //console.log('🥦 rowCock');
     const container = document.createElement("div");
-    items.forEach(item => container.appendChild(item));
+    for(const item of items){
+        if (item == undefined)
+            continue
+        //console.log('🌽 item', item);
+        container.appendChild(item);
+    }
     container.className = 'row pr-3';
     return container
 }
@@ -186,6 +197,24 @@ function col3Cock(items){
 }
 
 
+function funny(){
+    console.log('🌈🌈🌈🌈🌈 Funny: ');
+    
+    var newElement = document.createElement("p");
+    var textNode = document.createTextNode("This is a new paragraph.");
+    newElement.appendChild(textNode);
+
+    var newDiv = document.createElement("div");
+    newDiv.textContent = "This is a dynamically created div!";
+    newDiv.style.backgroundColor = "lightblue";
+    newDiv.style.padding = "20px";
+    newDiv.style.border = "1px solid black";
+
+    newElement.appendChild(newDiv);
+
+    console.log('🌈 newElement: ', newElement);
+
+}
 
 
 
@@ -203,81 +232,78 @@ const menuShortcuts = {
 const regexShInner = Object.keys(menuShortcuts).join('|');
 const pattern = new RegExp(`/?(${regexShInner})`);
 
-function cockDivBlock(items, functionName) {
-    return menuShortcuts[functionName](items);
-}
 
-function recursor0(parent, index, name='') {
-    let rows = parent.children;
+
+function recursor(parent, index, name='', level) {
+    const ident = ' +\t'.repeat(level);
+    console.log(ident, '🧡💛💚💙💜 Recursor index: ', index, 'name: ', name, 'level: ', level);
     const items = [];
     let targetGotoIndex = null;
     for (let idx = index; idx >= 0; idx--) {
-        if (targetGotoIndex !== null && idx > targetGotoIndex)
-            continue;
+        console.log(ident, '🥎 idx: ', idx, 'level: ', level,);
         
-        const row = parent.children[idx].innerHTML;
-
-        const match = row.trim().match(pattern);
-        if (!match) {
-            const elemPar = document.createElement("p");
-            elemPar.innerHTML = row;
-            items.push(elemPar);
-        } else {
-            if (match[0].includes('/')) {
-                const [itemsGot, newTargetIndex] = recursor(parent, idx-1, match[1]);
-
-                items.push(cockDivBlock(itemsGot, match[1]));
-                targetGotoIndex = newTargetIndex;
-            } else {
-                return [items.reverse(), idx-1];
-            }
-        }
-    }
-    return [items.reverse(), null];
-}
-
-
-function recursor(parent, index, name='') {
-    let rows = parent.children;
-    const items = [];
-    let targetGotoIndex = null;
-    for (let idx = index; idx >= 0; idx--) {
-        
-        const row = parent.children[idx].innerHTML;
-
-        console.log('🥎 idx: ', idx, row);
-
 
         if (targetGotoIndex !== null && idx > targetGotoIndex){
-            console.log('🏹 Skip idx: ', idx);
-            if (idx !=  targetGotoIndex + 1){
-                console.log('🏏 Remove idx: ', idx);
-                parent.children[idx].innerHTML = '';
+            console.log(ident, '🏹 Skip idx: ', idx);
+            /*if (idx !=  targetGotoIndex + 1){
+                cont
+                console.log(ident, '🏏 Remove idx: ', idx);
+                //parent.children[idx].innerHTML = '';
                 //parent.children[idx].remove();
             }
+            */
             continue;
         }
             
-        
-        
 
-        const match = row.trim().match(pattern);
-        if (!match) {
-            const elemPar = document.createElement("p");
-            elemPar.innerHTML = row;
-            items.push(elemPar);
-        } else {
+        const rowElem = parent.children[idx].cloneNode(true);
+        console.log(ident, '🥎 rowElem: ', rowElem);
+        console.log(ident, '📚 items: ', items);
+
+        const match = rowElem.innerHTML.trim().match(pattern);
+        if (!match){
+            items.push(rowElem);
+            if (level){
+                console.log(ident, '🏏 Remove elem: ', idx,  parent.children[idx].innerHTML);
+                parent.children[idx].remove();
+
+                console.log(ident, '🏏 After Remove: ', parent);
+                for (let idx_p = 0; idx_p < parent.children.length; idx_p++) {
+                    console.log(ident, '\t\t',  'idx_p: ', idx_p, parent.children[idx_p]);
+                }
+            }
+        }
+        else {
+            console.log(ident, '🍕 match: ',  match);
             if (match[0].includes('/')) {
-                const [itemsGot, newTargetIndex] = recursor(parent, idx-1, match[1]);
-                const constructedElem = cockDivBlock(itemsGot, match[1]);
+                console.log(ident, '🏏 Remove elem: ', idx,  parent.children[idx].innerHTML);
+                parent.children[idx].remove();
+
+                console.log(ident, '🏏 After Remove: ', parent);
+                for (let idx_p = 0; idx_p < parent.children.length; idx_p++) {
+                    console.log(ident, '\t\t',  'idx_p: ', idx_p, parent.children[idx_p]);
+                }
+
+                let [itemsInsideElem, newTargetIndex] = recursor(parent, idx-1, match[1], level+1 );
+
+                if (newTargetIndex < 0)
+                    newTargetIndex = 0;
+
+                console.log(ident, '🪝 Rebuild after Recursor now idx: ', idx); 
+                console.log(ident, '🛼 newTargetIndex: ', newTargetIndex, 'itemsInsideElem: ', itemsInsideElem);
+                if (newTargetIndex < 0)
+                    newTargetIndex = 0;
                 
-                console.log('🛼 newTargetIndex: ', newTargetIndex);
-                console.log('🥊 Replace idx: ', idx);
+                const constructedElem = menuShortcuts[match[1]](itemsInsideElem);
+                console.log(ident, '🥊 Replacment index: ', newTargetIndex+1, '🟫🟫🟫 constructedElem: ',  constructedElem);
                 parent.children[newTargetIndex+1].replaceWith(constructedElem);
+                console.log(ident, '🥊 After Replace: ', parent);
+                for (let idx_p = 0; idx_p < parent.children.length; idx_p++) {
+                    console.log(ident, '\t\t',  'idx_p: ', idx_p, parent.children[idx_p]);
+                }
 
                 items.push(constructedElem);
                 targetGotoIndex = newTargetIndex;
-                parent.children[idx].innerHTML = '';
             } else {
                 return [items.reverse(), idx-1];
             }
@@ -295,7 +321,7 @@ function processingShortcuts(){
     
 
     let parent = document.getElementsByClassName("markdown-body")[0];
-    const [items, index] = recursor(parent, parent.children.length - 1);
+    const [items, index] = recursor(parent, parent.children.length - 1, '', 0);
 
     /*while (parent.firstChild) {
         parent.removeChild(parent.firstChild);
@@ -309,6 +335,24 @@ function processingShortcuts(){
 
     console.log('🔮 Final');
 }
+
+
+
+function test(){
+    console.log('🆎 TEST');
+
+    let container = document.createElement("div");
+
+    let par = document.createElement("p");
+    par.innerHTML = '💛 inner Paraph';
+    container.appendChild(par);
+    console.log('💛💛 container: ', container);
+
+}
+
+
+funny();
+
 
 processingShortcuts();
 
