@@ -127,7 +127,7 @@ function ytbCock(shortcutName, items){
 
 function ytbRows3(shortcutName, items){
     console.log('🐠 ytbRows3');
-    const containerRow = rowCock([]);
+    const containerRow = constructRow([]);
     for(const item of items){
         if (!item.innerHTML)
             continue
@@ -148,51 +148,10 @@ function ytbRows3(shortcutName, items){
 
 // Row and Cols
 
-function rowCock(shortcutName, items) {
-    //console.log('🥦 rowCock');
+function constructRow(shortcutName, items) {
     const container = document.createElement("div");
-    for(const item of items){
-        if (item == undefined)
-            continue
-        //console.log('🌽 item', item);
-        container.appendChild(item);
-    }
+    items.forEach(item => container.appendChild(item));
     container.className = 'row pr-3';
-    return container
-}
-
-function colCock(items){
-    const container = document.createElement("div");
-    items.forEach(item => container.appendChild(item));
-    container.className = 'col';
-    return container
-}
-
-function col12Cock(items){
-    const container = document.createElement("div");
-    items.forEach(item => container.appendChild(item));
-    container.className = 'col col-12 col-md-12 col-lg-12  mb-5';
-    return container
-}
-
-function col6Cock(items){
-    const container = document.createElement("div");
-    items.forEach(item => container.appendChild(item));
-    container.className = 'col col-12 col-md-6 col-lg-6  mb-5';
-    return container
-}
-
-function col4Cock(items){
-    const container = document.createElement("div");
-    items.forEach(item => container.appendChild(item));
-    container.className = 'col col-12 col-md-6 col-lg-4  mb-5';
-    return container
-}
-
-function col3Cock(items){
-    const container = document.createElement("div");
-    items.forEach(item => container.appendChild(item));
-    container.className = 'col col-12 col-md-4 col-lg-3  mb-5';
     return container
 }
 
@@ -227,29 +186,9 @@ function constructColumn(shortcutName, items){
 }
 
 
-function funny(){
-    console.log('🌈🌈🌈🌈🌈 Funny: ');
-    
-    var newElement = document.createElement("p");
-    var textNode = document.createTextNode("This is a new paragraph.");
-    newElement.appendChild(textNode);
-
-    var newDiv = document.createElement("div");
-    newDiv.textContent = "This is a dynamically created div!";
-    newDiv.style.backgroundColor = "lightblue";
-    newDiv.style.padding = "20px";
-    newDiv.style.border = "1px solid black";
-
-    newElement.appendChild(newDiv);
-
-    console.log('🌈 newElement: ', newElement);
-
-}
-
-
 
 const menuShortcuts = {
-    'sh-row': rowCock,
+    'sh-row': constructRow,
     'sh-col12': constructColumn,
     'sh-col11': constructColumn,
     'sh-col10': constructColumn,
@@ -280,20 +219,11 @@ function recursor(parent, index, name='', level) {
     for (let idx = index; idx >= 0; idx--) {
         console.log(ident, '🥎 idx: ', idx, 'level: ', level,);
         
-
         if (targetGotoIndex !== null && idx > targetGotoIndex){
             console.log(ident, '🏹 Skip idx: ', idx);
-            /*if (idx !=  targetGotoIndex + 1){
-                cont
-                console.log(ident, '🏏 Remove idx: ', idx);
-                //parent.children[idx].innerHTML = '';
-                //parent.children[idx].remove();
-            }
-            */
             continue;
         }
             
-
         const rowElem = parent.children[idx].cloneNode(true);
         console.log(ident, '🥎 rowElem: ', rowElem);
         console.log(ident, '📚 items: ', items);
@@ -356,41 +286,12 @@ function processingShortcuts(){
     console.log('🍱 🌶 Availible Shortcuts in this version: ');
     Object.keys(menuShortcuts).forEach(item => console.log('🌶', item));
     console.log('');
-    
 
     let parent = document.getElementsByClassName("markdown-body")[0];
     const [items, index] = recursor(parent, parent.children.length - 1, '', 0);
 
-    /*while (parent.firstChild) {
-        parent.removeChild(parent.firstChild);
-    }
-    */
-
-    /*
-    for(const item of items)
-        parent.appendChild(item);
-    */
-
     console.log('🔮 Final');
 }
-
-
-
-function test(){
-    console.log('🆎 TEST');
-
-    let container = document.createElement("div");
-
-    let par = document.createElement("p");
-    par.innerHTML = '💛 inner Paraph';
-    container.appendChild(par);
-    console.log('💛💛 container: ', container);
-
-}
-
-
-funny();
-
 
 processingShortcuts();
 
