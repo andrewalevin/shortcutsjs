@@ -1,7 +1,12 @@
 
 
 
-// Utils
+
+/**
+ * 
+ *  Utils
+ * 
+ */
 
 function getYouTubeVideoID(url) {
     var youtubeRegex = /^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
@@ -49,6 +54,13 @@ function tuningURL(text){
 }
 
 
+/**
+ * 
+ *  Youtube Util
+ * 
+ */
+
+
 function getYoutubeBlock(url, title, items){
     const container = document.createElement("div");
     
@@ -93,14 +105,20 @@ function getYoutubeBlock(url, title, items){
 
 
 
-// Main Part
+/**
+ * 
+ *  SHORTCUTS
+ * 
+ */
 
 
-// Youtube Block
+/**
+ * 
+ *  Youtube Shortcut
+ * 
+ */
 
 function constructYoutubeBlock(shortcutName, items){
-    console.log('🥦 constructYoutubeBlock');
-    console.log('🥦 items', items);
     const container = document.createElement("div");
     title = '';
     url = ''
@@ -117,9 +135,6 @@ function constructYoutubeBlock(shortcutName, items){
         }
         descriptions.push(item);
     }
-    console.log('🍉 title', title);
-    console.log('🍉 url', url);
-    console.log('🍉 descriptions', descriptions);
 
     return getYoutubeBlock(url, title, descriptions)
 }
@@ -155,7 +170,6 @@ function constructYoutubeRow(shortcutName, items){
  * Row and Cols
  * 
  */
-
 
 function constructRow(shortcutName, items) {
     const container = document.createElement("div");
@@ -312,13 +326,12 @@ function processingShortcuts(){
     console.log('');
 
     let parent = document.getElementsByClassName("markdown-body")[0];
-    const [items, index] = recursor(parent, parent.children.length - 1, '', 0);
+    const [items, index] = recursor(parent, parent.children.length-1, '', 0);
 
     console.log('🔮 Final');
 }
 
 processingShortcuts();
-
 
 
 
