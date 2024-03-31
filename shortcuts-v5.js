@@ -60,7 +60,6 @@ function tuningURL(text){
  * 
  */
 
-
 function getYoutubeBlock(url, title, items){
     const container = document.createElement("div");
     
@@ -327,6 +326,11 @@ function processingShortcuts(){
 
     let parent = document.getElementsByClassName("markdown-body")[0];
     const [items, index] = recursor(parent, parent.children.length-1, '', 0);
+
+    console.log('🔮 itmes: ');
+    for(const item of items){
+        console.log('🔮', item.innerHTML);
+    }
 
     console.log('🔮 Final');
 }
