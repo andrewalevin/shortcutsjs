@@ -98,7 +98,7 @@ function ytbTagConstruction(url, title, items){
 
 // Youtube Block
 
-function ytbCock(items){
+function ytbCock(shortcutName, items){
     console.log('🥦 ytbCock');
     const container = document.createElement("div");
     title = '';
@@ -125,7 +125,7 @@ function ytbCock(items){
 
 
 
-function ytbRows3(items){
+function ytbRows3(shortcutName, items){
     console.log('🐠 ytbRows3');
     const containerRow = rowCock([]);
     for(const item of items){
@@ -148,7 +148,7 @@ function ytbRows3(items){
 
 // Row and Cols
 
-function rowCock(items) {
+function rowCock(shortcutName, items) {
     //console.log('🥦 rowCock');
     const container = document.createElement("div");
     for(const item of items){
@@ -197,6 +197,36 @@ function col3Cock(items){
 }
 
 
+const columnClasses = {
+    '12':   'col-12 col-md-12 col-lg-12',
+    '11':   'col-12 col-md-12 col-lg-11',
+    '10':   'col-12 col-md-10 col-lg-10',
+    '9':    'col-12 col-md-9 col-lg-9',
+    '8':    'col-12 col-md-8 col-lg-8',
+    '7':    'col-12 col-md-7 col-lg-7',
+    '6':    'col-12 col-md-6 col-lg-6',
+    '5':    'col-12 col-md-5 col-lg-5',
+    '4':    'col-12 col-md-4 col-lg-4',
+    '3':    'col-12 col-md-3 col-lg-3',
+    '2':    'col-12 col-md-2 col-lg-2',
+    '1':    'col-12 col-md-1 col-lg-1',
+};
+const patternColumSize = new RegExp(`sh-col([0-9]{0,2})`);
+
+function constructColumn(shortcutName, items){
+    const container = document.createElement("div");
+    container.className = 'col';
+
+    items.forEach(item => container.appendChild(item));
+
+    if(match = shortcutName.trim().match(patternColumSize))
+        if (columnClasses.hasOwnProperty(match[1]))
+            container.classList.add(...columnClasses[match[1]].split(' '));
+
+    return container
+}
+
+
 function funny(){
     console.log('🌈🌈🌈🌈🌈 Funny: ');
     
@@ -220,17 +250,25 @@ function funny(){
 
 const menuShortcuts = {
     'sh-row': rowCock,
-    'sh-col-12': col12Cock,
-    'sh-col-6': col6Cock,
-    'sh-col-4': col4Cock,
-    'sh-col-3': col3Cock,
-    'sh-col': colCock,
+    'sh-col12': constructColumn,
+    'sh-col11': constructColumn,
+    'sh-col10': constructColumn,
+    'sh-col9': constructColumn,
+    'sh-col8': constructColumn,
+    'sh-col7': constructColumn,
+    'sh-col6': constructColumn,
+    'sh-col5': constructColumn,
+    'sh-col4': constructColumn,
+    'sh-col3': constructColumn,
+    'sh-col2': constructColumn,
+    'sh-col1': constructColumn,
+    'sh-col': constructColumn,
     'sh-ytb-rows3': ytbRows3,
     'sh-ytb': ytbCock,
 };
 
 const regexShInner = Object.keys(menuShortcuts).join('|');
-const pattern = new RegExp(`/?(${regexShInner})`);
+const pattern = new RegExp(`/?(${regexShInner})/?`);
 
 
 
@@ -294,7 +332,7 @@ function recursor(parent, index, name='', level) {
                 if (newTargetIndex < 0)
                     newTargetIndex = 0;
                 
-                const constructedElem = menuShortcuts[match[1]](itemsInsideElem);
+                const constructedElem = menuShortcuts[match[1]](match[1], itemsInsideElem);
                 console.log(ident, '🥊 Replacment index: ', newTargetIndex+1, '🟫🟫🟫 constructedElem: ',  constructedElem);
                 parent.children[newTargetIndex+1].replaceWith(constructedElem);
                 console.log(ident, '🥊 After Replace: ', parent);
