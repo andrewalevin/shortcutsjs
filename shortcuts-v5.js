@@ -49,7 +49,7 @@ function tuningURL(text){
 }
 
 
-function ytbTagConstruction(url, title, items){
+function getYoutubeBlock(url, title, items){
     const container = document.createElement("div");
     
     const movieID = getYouTubeVideoID(url);
@@ -98,8 +98,9 @@ function ytbTagConstruction(url, title, items){
 
 // Youtube Block
 
-function ytbCock(shortcutName, items){
-    console.log('🥦 ytbCock');
+function constructYoutubeBlock(shortcutName, items){
+    console.log('🥦 constructYoutubeBlock');
+    console.log('🥦 items', items);
     const container = document.createElement("div");
     title = '';
     url = ''
@@ -120,14 +121,18 @@ function ytbCock(shortcutName, items){
     console.log('🍉 url', url);
     console.log('🍉 descriptions', descriptions);
 
-    return ytbTagConstruction(url, title, descriptions)
+    return getYoutubeBlock(url, title, descriptions)
 }
 
 
+const patternYtbRowColumSize = new RegExp(`sh-ytb-row-col([0-9]{0,2})`);
 
-function ytbRows3(shortcutName, items){
-    console.log('🐠 ytbRows3');
-    const containerRow = constructRow([]);
+function constructYoutubeRow(shortcutName, items){
+    let columnClass = 'sh-col';
+    if(match = shortcutName.trim().match(patternYtbRowColumSize))
+        columnClass = `sh-col${match[1]}`;
+
+    const container = constructRow([]);
     for(const item of items){
         if (!item.innerHTML)
             continue
@@ -138,23 +143,27 @@ function ytbRows3(shortcutName, items){
             par.innerHTML = part; 
             rows.push(par);
         }
-        containerRow.appendChild(col4Cock([ytbCock(rows)]));       
+        const ytbBlock = constructYoutubeBlock('sh-ytb', rows);
+        container.appendChild(constructColumn(columnClass, [ytbBlock]));       
     }
-    return containerRow
-}
-
-
-
-
-// Row and Cols
-
-function constructRow(shortcutName, items) {
-    const container = document.createElement("div");
-    items.forEach(item => container.appendChild(item));
-    container.className = 'row pr-3';
     return container
 }
 
+
+/**
+ * 
+ * Row and Cols
+ * 
+ */
+
+
+function constructRow(shortcutName, items) {
+    const container = document.createElement("div");
+    if (items)
+        items.forEach(item => container.appendChild(item));
+    container.className = 'row pr-3';
+    return container
+}
 
 const columnClasses = {
     '12':   'col-12 col-md-12 col-lg-12',
@@ -170,6 +179,7 @@ const columnClasses = {
     '2':    'col-12 col-md-2 col-lg-2',
     '1':    'col-12 col-md-1 col-lg-1',
 };
+
 const patternColumSize = new RegExp(`sh-col([0-9]{0,2})`);
 
 function constructColumn(shortcutName, items){
@@ -186,6 +196,11 @@ function constructColumn(shortcutName, items){
 }
 
 
+/**
+ * 
+ *  Main Processing Below
+ * 
+ */
 
 const menuShortcuts = {
     'sh-row': constructRow,
@@ -202,14 +217,23 @@ const menuShortcuts = {
     'sh-col2': constructColumn,
     'sh-col1': constructColumn,
     'sh-col': constructColumn,
-    'sh-ytb-rows3': ytbRows3,
-    'sh-ytb': ytbCock,
+    'sh-ytb-row-col12': constructYoutubeRow,
+    'sh-ytb-row-col11': constructYoutubeRow,
+    'sh-ytb-row-col10': constructYoutubeRow,
+    'sh-ytb-row-col9': constructYoutubeRow,
+    'sh-ytb-row-col8': constructYoutubeRow,
+    'sh-ytb-row-col7': constructYoutubeRow,
+    'sh-ytb-row-col6': constructYoutubeRow,
+    'sh-ytb-row-col5': constructYoutubeRow,
+    'sh-ytb-row-col4': constructYoutubeRow,
+    'sh-ytb-row-col3': constructYoutubeRow,
+    'sh-ytb-row-col2': constructYoutubeRow,
+    'sh-ytb-row-col1': constructYoutubeRow,
+    'sh-ytb': constructYoutubeBlock,
 };
 
 const regexShInner = Object.keys(menuShortcuts).join('|');
 const pattern = new RegExp(`/?(${regexShInner})/?`);
-
-
 
 function recursor(parent, index, name='', level) {
     const ident = ' +\t'.repeat(level);
@@ -298,12 +322,15 @@ processingShortcuts();
 
 
 
-
-
- // Img Youtube Small Repalcer
+/**
+ * 
+ * Img Youtube Small Repalcer
+ * 
+ */
 
 function imgOnload(img){
-    if (img.naturalWidth < 121){
+    const minDefaultImageSize = 121;
+    if (img.naturalWidth < minDefaultImageSize){
         let parts = img.src.split('/');
         parts[parts.length - 1] = 'hqdefault.jpg';
         img.src = parts.join('/');
@@ -311,9 +338,8 @@ function imgOnload(img){
 }
 
 function blinkImagesReplacer(){
-    for(const img of document.getElementsByClassName("markdown-body")[0].querySelectorAll('img.thumbnail-youtube')){
-        img.onload = () => imgOnload(img);
-    }
+    document.getElementsByClassName("markdown-body")[0].querySelectorAll('img.thumbnail-youtube')
+    .forEach(img => img.onload = () => imgOnload(img));
 }
 
 blinkImagesReplacer();
