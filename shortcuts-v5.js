@@ -180,18 +180,18 @@ function constructRow(shortcutName, items) {
 }
 
 const columnClasses = {
-    '12':   'col-12 col-md-12 col-lg-12',
-    '11':   'col-12 col-md-12 col-lg-11',
-    '10':   'col-12 col-md-10 col-lg-10',
-    '9':    'col-12 col-md-9 col-lg-9',
-    '8':    'col-12 col-md-8 col-lg-8',
-    '7':    'col-12 col-md-7 col-lg-7',
-    '6':    'col-12 col-md-6 col-lg-6',
-    '5':    'col-12 col-md-5 col-lg-5',
-    '4':    'col-12 col-md-4 col-lg-4',
-    '3':    'col-12 col-md-3 col-lg-3',
-    '2':    'col-12 col-md-2 col-lg-2',
-    '1':    'col-12 col-md-1 col-lg-1',
+    '12':   'col-12 col-sm-12 col-md-12 col-lg-12',
+    '11':   'col-12 col-sm-12 col-md-12 col-lg-11',
+    '10':   'col-12 col-sm-12 col-md-10 col-lg-10',
+    '9':    'col-12 col-sm-12 col-md-9 col-lg-9',
+    '8':    'col-12 col-sm-12 col-md-8 col-lg-8',
+    '7':    'col-12 col-sm-12 col-md-7 col-lg-7',
+    '6':    'col-12 col-sm-12 col-md-6 col-lg-6',
+    '5':    'col-12 col-sm-6 col-md-5 col-lg-5',
+    '4':    'col-12 col-sm-6 col-md-4 col-lg-4',
+    '3':    'col-12 col-sm-6 col-md-4 col-lg-3',
+    '2':    'col-12 col-sm-6 col-md-2 col-lg-2',
+    '1':    'col-12 col-sm-6 col-md-1 col-lg-1',
 };
 
 const patternColumSize = new RegExp(`sh-col([0-9]{0,2})`);
